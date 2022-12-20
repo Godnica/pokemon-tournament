@@ -38,6 +38,11 @@ export default {
     }
   },
   mounted(){
+
+    console.log("kdjskjdkjskdjksjd", this.$store.state.row);
+    if(this.$store.state.row){
+      console.log("---- io e mavi andiamo a fare la doccia fra poco <3", this.$store.state.row)
+    }
   },
   methods:{
     setName(val){
@@ -89,7 +94,9 @@ export default {
         created_at: new Date(),
         pokemons : this.pokemonArray
       }
-      this.$internal_api.post('team', pay)
+      this.$internal_api.post('team', pay).then(()=>{
+        this.$store.dispatch('MustSeePokemonTeam')
+      })
     }
   },
   

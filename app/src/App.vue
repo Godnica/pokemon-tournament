@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+   <div id="app">
     <nav>
       <router-link to="/team/create">Build a Team</router-link>
       <img src="./assets/pokemon-title.svg" alt="Title">
@@ -24,8 +24,6 @@ export default {
       this.pokemonCounter = res.data.count;
 
       this.$store.dispatch('InitializePokemonCounter', res.data.count);
-
-      console.log("---->", this.$store.state.pokemonCounter)
       
     })
   }
@@ -33,7 +31,9 @@ export default {
 </script>
 
 <style>
-#app {
+#app 
+  {
+
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

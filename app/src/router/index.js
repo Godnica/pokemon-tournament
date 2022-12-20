@@ -9,12 +9,17 @@ const routes = [
   {
     path: '/team/create',
     name: 'create',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/team/list',
     name: 'list',
-    component: TeamList
+    component: TeamList,
+  },
+  {
+    path: '/team/update',
+    name: 'list',
+    component: HomeView
   }
 ]
 const router = new VueRouter({
