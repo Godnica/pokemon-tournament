@@ -77,7 +77,7 @@ h1{
 
 
 input[type=text] {
-  width: 100%;
+  width: 80%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -95,15 +95,22 @@ input[type=text] {
 }
 
 button{
-  background-color: #003A70;
+  background-color: #0075BE;
   color: #ffcb05;
   border-radius: 8px;
   padding: 5px;
+  border-color: #0A285F;
 }
 
 button:disabled{
   background-color: #003a706c;
   color: #ffcd056c;
+}
+
+.flex{
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
 }
 
 </style>
