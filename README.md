@@ -15,7 +15,7 @@ now let's launch the container:
 docker run -p 8080:8080 pokemon-app
 ```
 
-let's now start the backend application in nest returning to the root of the project.
+let's now start a new terminal in the root of the project.
 ```
 cd ../api
 ```
