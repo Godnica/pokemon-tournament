@@ -1,12 +1,14 @@
 <template>
     <div class="p-card">
+        <img src="../assets/delete.svg" class="img-delete" @click="emitter(pokemon)">
+        <img v-if="pokemon.sprite_img" v-bind:src="pokemon.sprite_img">
+        <img v-else src="../assets/fogliotriste.svg" class="no-img">
         <ul>
-            <li>Nome {{ pokemon.name }}</li>
-            <li>Abilità: {{ pokemon.abilities }}</li>
-            <li>Esperienza: {{ pokemon.base_experience }}</li>
-            <li>Tipi: {{ pokemon.types }}</li>
+          <li>Nome {{ pokemon.name }}</li>
+          <li>Abilità: {{ pokemon.abilities }}</li>
+          <li>Esperienza: {{ pokemon.base_experience }}</li>
+          <li>Tipi: {{ pokemon.types }}</li>
         </ul>
-        <img v-bind:src="pokemon.sprite_img">
     </div>
 </template>
 
@@ -14,7 +16,12 @@
 <script>
 export default {
     name: 'PokemonCard',
-    props: ['pokemon']
+    props: ['pokemon'],
+    methods: {
+      emitter(pokemon){
+        this.$emit('delete', pokemon.id);
+      }
+    }
 }
 
 </script>
@@ -24,18 +31,18 @@ ul{
   text-align: left;
 }
 
-.p-card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  border-radius: 8px;
-  padding-right: 0.3em;
-  margin: 0.3em;
+
+
+.img-delete{
+  width: 1em;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  cursor: pointer;
 }
 
-.p-card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+.no-img{
+  width: 4em;
 }
-
-
 
 </style>

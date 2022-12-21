@@ -18,11 +18,9 @@ export default new Vuex.Store({
     },
     mutations:{
         INIT_TOTAL(state, total){
-            console.log("Seass", total);
             state.pokemonCounter = total;
         },
         INIT_LIST(state, list){
-            console.log("---list", list);
             state.pokemonList = list
         },
         UPDATE_TEAM(state, team){
@@ -45,7 +43,6 @@ export default new Vuex.Store({
             commit('INIT_LIST', list);
         },
         UpdatePokemonTeam({commit}, team){
-            console.log("update pokemon team")
             commit('UPDATE_TEAM', team)
         },
         MustSeePokemonTeam({commit}){

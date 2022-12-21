@@ -20,7 +20,7 @@ export default {
   },
   mounted(){
     this.$external_api.get('pokemon').then(res=>{
-      console.log(res.data.count);      
+      
       this.pokemonCounter = res.data.count;
 
       this.$store.dispatch('InitializePokemonCounter', res.data.count);
@@ -52,6 +52,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   background-color: #ef5350;
+  margin-bottom: 1em;
 }
 
 nav a {
@@ -59,6 +60,10 @@ nav a {
   color: white;
   text-decoration: none;
   margin: 0 2em 0 2em
+}
+
+nav a:hover {
+  color: white;
 }
 
 nav img{
@@ -69,7 +74,7 @@ nav a.router-link-exact-active {
   color: #ffcb05;
 }
 
-h1{
+h1, h2{
   color: #003A70;
   margin-left: 1em;
   margin-right: 1em;
@@ -88,21 +93,16 @@ input[type=text] {
   font-size: 1.3em;
 }
 
-
-.container{
-  padding-top: 0.5em;
-  margin: 1em;
-}
-
-button{
+b-button{
   background-color: #0075BE;
   color: #ffcb05;
   border-radius: 8px;
   padding: 5px;
   border-color: #0A285F;
+  margin-bottom: 2em;
 }
 
-button:disabled{
+b-button:disabled{
   background-color: #003a706c;
   color: #ffcd056c;
 }
@@ -112,5 +112,20 @@ button:disabled{
   justify-content: center;
   flex-wrap:wrap;
 }
+
+.p-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0.3em;
+  position: relative;
+
+}
+
+.p-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
 
 </style>

@@ -3,17 +3,49 @@
     <h1>Lista dei team</h1>
 
     <div>
-      <b-form-group label="Pokemon team must have:" v-slot="{ ariaDescribedby }">
-      <b-form-checkbox-group
-        id="checkbox-group"
-        v-model="typesSelected"
-        :options="allType"
-        :aria-describedby="ariaDescribedby"   
-      ></b-form-checkbox-group>
-    </b-form-group>
+      <img src="../assets/filter-outline.svg" class="filter" @click="filterVisibility()">
+
+      <div class="p-card container" id="filter-div" v-if="filter_visible">
+        <div class="container">
+          <b-form-group label="Pokemon team must have:" v-slot="{ ariaDescribedby }">
+          <b-form-checkbox-group
+            id="checkbox-group"
+            v-model="typesSelected"
+            :options="allType"
+            :aria-describedby="ariaDescribedby"   
+          ></b-form-checkbox-group>
+        </b-form-group>
+        </div>
+      </div>
     </div>
- 
-      <b-table striped hover :items="teams" @row-clicked="rowClicked">
+
+      <div class="container">
+        <div class="p-card" v-for="team, i in teams" :key="i" @click="rowClicked(team.id)">
+          <img v-for="pokemon, u in team.pokemons" :key="u" :src="pokemon">
+          <div class="container">
+            
+              <div class=box>
+                <strong>Team name:</strong> {{team.team_name}}
+             </div>
+              
+              <div class=box>
+                <strong>Created at</strong> {{team.created_at}}
+             </div>
+              
+              <div class=box>
+                <strong>Total Exp</strong> {{team.totale_esperienza}}
+             </div>
+              
+              <div class=box>
+                <strong>Types</strong> {{team.types.join()}}
+             </div>
+              
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- <b-table striped hover :items="teams" @row-clicked="rowClicked">
         <template #cell(pokemons)="data">
           <img v-for="p_img, i in data.item.pokemons" :key="i" :src="p_img">
         </template>
@@ -24,7 +56,7 @@
             </li>
           </ul>
         </template>
-      </b-table>
+      </b-table> -->
   </div>
 </template>
 
@@ -34,6 +66,7 @@ export default {
   name: 'TeamList',
   data(){
     return {
+      filter_visible: false,
       teams: [],
       allType: [],
       typesSelected: [],
@@ -67,19 +100,18 @@ export default {
         
         this.oldCopy = [...this.teams];
 
-        console.log("dispaccio l'evento")
         this.$store.dispatch('UpdatePokemonTeam', this.oldCopy);
 
       })
     }else{
-      console.log("non faccio più la chiamata")
       this.teams = this.$store.state.team.pokemons
+      this.allType = this.teams.map(el=>el.types).flat(1).filter(onlyUnique);
+      this.oldCopy = [...this.teams];
     }
     
   },
   watch: {
     typesSelected: function (n) {
-      console.log(n)
 
       function contains(arrStart,arrMustHave){
         let flag = true
@@ -99,9 +131,12 @@ export default {
   },
   methods: {
     rowClicked(row){
-      console.log("buco di culo", row)
       this.$store.dispatch('PrepareUpdate', row);
-      this.$router.push({ path: '/team/update'});
+      this.$router.push({ path: `/team/update/${row}`});
+    },
+    filterVisibility(){
+      console.log(this.filter_visible)
+      this.filter_visible = !this.filter_visible
     }
   }
 
@@ -110,9 +145,6 @@ export default {
 
 
 <style>
-#checkbox-group{
-  display: inline-flex;
-}
 
 .custom-control{
   margin: 0.3em;
@@ -122,5 +154,22 @@ export default {
   margin-left: 0.3em;
   margin-right: 0.3em;
 }
+.box{
+  min-width: 100%;
+  overflow-wrap: break-word;
+}
+.filter{
+  width: 30px;
+  border-radius: 8px;
+  border: #0075be91;
+  border-style: groove;
+  margin: 1em;
+  padding: 0.3em;
+  cursor: pointer;
+}
 
+#filter-div{
+  width: 80%;
+  margin-bottom: 1em;
+}
 </style>

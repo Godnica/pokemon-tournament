@@ -17,7 +17,12 @@ const routes = [
     component: TeamList,
   },
   {
-    path: '/team/update',
+    path: '/team/update/:id',
+    name: 'list',
+    component: HomeView
+  },
+  {
+    path: '**',
     name: 'list',
     component: HomeView
   }

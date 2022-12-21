@@ -1,22 +1,23 @@
 <template>
   <div class="home">
     <div class="container">
+      <h2 v-if="editPage">Stai modificando il team {{ teamName }}</h2>
       <h1>Nome del team </h1>
-      <input   type="text" @input="setName($event.target.value)">      
+      <input v-model="teamName"  type="text" @input="setName($event.target.value)">      
     </div>
-    <button @click="catching()" :disabled="teamName==''">
-      Gotta Catch 'Em All
-    </button>
-    <button  @click="saveTeam()" v-if="pokemonArray.length>0 && teamName">
-      Salva Team
-    </button> 
+    <div class="bt-container">
+      <b-button @click="catching()" :disabled="teamName==''" class="poke-button" pill>
+        Gotta Catch 'Em All
+      </b-button>
+      <b-button  @click="saveTeam()" v-if="pokemonArray.length>0 && teamName" class="poke-button" pill>
+        Salva Team
+      </b-button> 
+    </div>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 
     <div class="flex">
 
-      <PokemonCardVue v-for="p,i in pokemonArray" v-bind:key="i" v-bind:pokemon="p"></PokemonCardVue>
-    </div>
-    <div id="footer">
+      <PokemonCardVue v-for="p,i in pokemonArray" v-bind:key="i" v-bind:pokemon="p" @delete="deletePokemon(i)"></PokemonCardVue>
     </div>
   </div>
 
@@ -33,20 +34,26 @@ export default {
   },
   data(){
     return {
+      editPage: false,
       teamName: '',
       pokemonArray: []
     }
   },
   mounted(){
-
-    console.log("kdjskjdkjskdjksjd", this.$store.state.row);
-    if(this.$store.state.row){
-      console.log("---- io e mavi andiamo a fare la doccia fra poco <3", this.$store.state.row)
+    if(this.$route.params.id){
+      this.$internal_api.get(`team/${this.$route.params.id}`).then(res=>{
+        if(res.data.length==0){
+          this.$router.push('/team/create')
+        }else{
+          this.editPage = true;
+          this.teamName = res.data[0].team_name
+          this.pokemonArray = res.data[0].pokemons
+        }
+      })
     }
   },
   methods:{
     setName(val){
-      console.log(val)
       this.teamName = val;
     },
     catching(){
@@ -60,20 +67,11 @@ export default {
       }
     },
     takeRandomPokemon(){
-      console.log("-Fine-->",this.$store.state.pokemonList);
       const rand = Math.floor(Math.random() * this.$store.state.pokemonCounter);
       const pokemon_url = this.$store.state.pokemonList[rand].url;
       const split_index = pokemon_url.split("/").length
-
-      console.log("---", pokemon_url.split("/")[split_index-2])
-
       this.$external_api.get(`pokemon/${pokemon_url.split("/")[split_index-2]}`).then(pokemon_=>{        
-
-
-        console.log(pokemon_);
-
         
-
         const pokemon = {
           name: pokemon_.data.name,
           base_experience: pokemon_.data.base_experience,
@@ -82,21 +80,29 @@ export default {
           types: pokemon_.data.types.map(t=>t.type.name).join()
         }
 
-        console.log("---->",pokemon)
-
         this.pokemonArray.push(pokemon)
       })
     },
     saveTeam(){
-      console.log("Santo dio")
       const pay = {
         team_name : this.teamName,
         created_at: new Date(),
         pokemons : this.pokemonArray
       }
-      this.$internal_api.post('team', pay).then(()=>{
-        this.$store.dispatch('MustSeePokemonTeam')
-      })
+      if(!this.editPage){
+        this.$internal_api.post('team', pay).then(()=>{
+          this.$store.dispatch('MustSeePokemonTeam')
+          this.$router.push({path: "/team/list"});
+        })
+      }else{
+        this.$internal_api.put(`team/${this.$route.params.id}`, pay).then(()=>{
+          this.$store.dispatch('MustSeePokemonTeam')
+          this.$router.push( {path: "/team/list"});
+        })
+      }
+    },
+    deletePokemon(i){
+      this.pokemonArray.splice(i,1);
     }
   },
   
@@ -105,6 +111,28 @@ export default {
 </script>
 
 <style scoped>
+
+.bt-container{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+button{
+  font-size: x-large;
+  background-color: #0075BE;
+  margin-bottom: 1em;
+}
+
+button:hover{
+  color: #ffcb05;
+  background-color: #0075BE;
+}
+
+button:disabled{
+  font-size: x-large;
+  background-color: #0075be91;
+}
+
 button{
   margin-right: 0.3em;
   margin-left: 0.3em;
