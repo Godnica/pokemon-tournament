@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="container">
-      <h2 v-if="editPage">Stai modificando il team {{ teamName }}</h2>
+      <h2 v-if="editPage">Stai modificando il team</h2>
       <h1>Nome del team </h1>
       <input v-model="teamName"  type="text" @input="setName($event.target.value)">      
     </div>

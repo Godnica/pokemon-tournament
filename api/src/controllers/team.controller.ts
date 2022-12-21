@@ -1,5 +1,4 @@
-import { Body, Controller , Get, NotFoundException, Param, Post} from "@nestjs/common";
-import { TeamDto } from "src/entities/dto/team.dto";
+import { Body, Controller , Get, Param, Post, Put} from "@nestjs/common";
 import { TeamService } from "src/services/team.services";
 
 
@@ -13,6 +12,21 @@ export class TeamController{
     async findAll()
     {
         return this.teamService.findAll()
+    }
+
+    @Get('/:id')
+    async find(
+        @Param('id') idTeam: string
+    ){
+        return this.teamService.find(+idTeam)
+    }
+
+    @Put('/:id')
+    async update(
+        @Param('id') idTeam: number,
+        @Body() team
+    ){
+        return this.teamService.update(idTeam, team)
     }
 
     @Post()

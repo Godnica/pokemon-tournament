@@ -7,14 +7,16 @@
 
       <div class="p-card container" id="filter-div" v-if="filter_visible">
         <div class="container">
-          <b-form-group label="Pokemon team must have:" v-slot="{ ariaDescribedby }">
-          <b-form-checkbox-group
-            id="checkbox-group"
-            v-model="typesSelected"
-            :options="allType"
-            :aria-describedby="ariaDescribedby"   
-          ></b-form-checkbox-group>
-        </b-form-group>
+          <div>
+            <b-form-group label="Pokemon team must have:">
+            <b-form-checkbox-group
+              id="checkbox-group"
+              v-model="typesSelected"
+              :options="allType"
+              :aria-describedby="ariaDescribedby"   
+            ></b-form-checkbox-group>
+          </b-form-group>
+          </div>
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ export class Pokemon{
     @Column()
     sprite_img: string
 
-    @ManyToOne(()=>Team, (team)=>team.pokemons)
+    @ManyToOne(()=>Team, (team)=>team.pokemons, { onDelete: 'CASCADE' })
     team: Team
 
 }
