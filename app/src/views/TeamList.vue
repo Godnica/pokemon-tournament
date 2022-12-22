@@ -1,8 +1,8 @@
 <template>
   <div class="about">
-    <h1>Lista dei team</h1>
+    <h1>Team List</h1>
 
-    <div>
+    <div v-if="teams.length>0">
       <img src="../assets/filter-outline.svg" class="filter" @click="filterVisibility()">
 
       <div class="p-card container" id="filter-div" v-if="filter_visible">
@@ -19,6 +19,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div v-else class="p-card container">
+      <h1>Attention!</h1>
+      <h2> There are no teams in the tournament yet </h2>
+      <b-button to="team/create">Home</b-button>
     </div>
 
       <div class="container">
@@ -46,19 +51,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <b-table striped hover :items="teams" @row-clicked="rowClicked">
-        <template #cell(pokemons)="data">
-          <img v-for="p_img, i in data.item.pokemons" :key="i" :src="p_img">
-        </template>
-        <template #cell(types)="data">
-          <ul>
-            <li v-for="p_type, i in data.item.types" :key="i">
-              {{ p_type }}
-            </li>
-          </ul>
-        </template>
-      </b-table> -->
   </div>
 </template>
 
@@ -82,7 +74,6 @@ export default {
 
 
     if(!this.$store.state.team.ready){
-
       this.$internal_api.get('team').then(teams=>{
         teams.data = teams.data.sort((a, b)=>
           {
@@ -174,4 +165,18 @@ export default {
   width: 80%;
   margin-bottom: 1em;
 }
+
+.container a {
+  font-weight: bold;
+  color: #ffcb05;
+  text-decoration: none;
+  margin: 0 2em 0 2em;
+  background-color: #0075BE;
+}
+
+.container a:hover {
+  color: white;
+  background-color: #0075BE;
+}
+
 </style>
