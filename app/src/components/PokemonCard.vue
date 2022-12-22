@@ -4,10 +4,10 @@
         <img v-if="pokemon.sprite_img" v-bind:src="pokemon.sprite_img">
         <img v-else src="../assets/fogliotriste.svg" class="no-img">
         <ul>
-          <li>Nome {{ pokemon.name }}</li>
-          <li>Abilità: {{ pokemon.abilities }}</li>
-          <li>Esperienza: {{ pokemon.base_experience }}</li>
-          <li>Tipi: {{ pokemon.types }}</li>
+          <li>Name {{ pokemon.name }}</li>
+          <li>Abilities: {{ pokemon.abilities }}</li>
+          <li>Experience: {{ pokemon.base_experience }}</li>
+          <li>Types: {{ pokemon.types }}</li>
         </ul>
     </div>
 </template>

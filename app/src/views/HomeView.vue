@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="container">
-      <h2 v-if="editPage">Stai modificando il team</h2>
-      <h1>Nome del team </h1>
+      <h2 v-if="editPage">You are editing the team</h2>
+      <h1>Team Name </h1>
       <input v-model="teamName"  type="text" @input="setName($event.target.value)">      
     </div>
     <div class="bt-container">
@@ -10,10 +10,9 @@
         Gotta Catch 'Em All
       </b-button>
       <b-button  @click="saveTeam()" v-if="pokemonArray.length>0 && teamName" class="poke-button" pill>
-        Salva Team
+        Save team
       </b-button> 
     </div>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 
     <div class="flex">
 
